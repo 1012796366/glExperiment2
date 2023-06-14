@@ -195,9 +195,8 @@ int main()
 		fixStar.use();
 
 		// 五角星原地旋转一小时.mp4 变换矩阵的设定
-		// 执行顺序从下到上，矩阵相乘顺序从上到下
-		// 先写位移再写旋转，最后才到写缩放，这是代码顺序
-		// 先执行缩放，再旋转，最后位移，这是执行顺序
+		// 位移旋转放缩的执行顺序从下到上，此处特化为先缩放后旋转
+		// 矩阵相乘顺序和代码编写顺序从上到下
 		transFixStar = glm::mat4(1.0f);
 		transFixStar = glm::rotate(transFixStar, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 		transFixStar = glm::scale(transFixStar, glm::vec3(scaleSize, scaleSize, 1.0f));	// 五角星太大了，缩放
@@ -214,6 +213,9 @@ int main()
 		// 开始画移动五角星
 		movStar.use();
 
+		// 会到处飞的五角星.mp4 变换矩阵的设定
+		// 位移旋转放缩的执行顺序从下到上，此处特化为先缩放后旋转，最后平移
+		// 矩阵相乘顺序和代码编写顺序从上到下
 		transMovStar = glm::mat4(1.0f);
 		transMovStar = glm::translate(transMovStar, glm::vec3(posX, posY, 0.0f));
 		transMovStar = glm::rotate(transMovStar, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -dirR));
