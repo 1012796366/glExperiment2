@@ -161,7 +161,8 @@ int main()
 	glBindVertexArray(0);
 
 	// 预先声明需要使用到的变量
-	// 可以放进循环里，不放进去仅因为觉得不好看
+	// 可以放进循环里，不放进去仅因为我个人觉得不好看
+	// 如果不放进去，请记得每次循环时都要初始化变量
 	glm::mat4 transFixStar;
 	glm::mat4 transMovStar;
 	unsigned int uniFixStar;
@@ -203,9 +204,8 @@ int main()
 		// uniform 变量修改
 		uniFixStar = glGetUniformLocation(fixStar.ID, "transform");
 		glUniformMatrix4fv(uniFixStar, 1, GL_FALSE, glm::value_ptr(transFixStar));
-
+		// 画画
 		glBindVertexArray(VAO[0]);
-
 		// Deprecated
 		// glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);
@@ -220,10 +220,10 @@ int main()
 		transMovStar = glm::translate(transMovStar, glm::vec3(posX, posY, 0.0f));
 		transMovStar = glm::rotate(transMovStar, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, -dirR));
 		transMovStar = glm::scale(transMovStar, glm::vec3(scaleSize, scaleSize, 1.0f));
-		// uniform
+		// uniform 变量修改
 		uniMovStar = glGetUniformLocation(movStar.ID, "transform");
 		glUniformMatrix4fv(uniMovStar, 1, GL_FALSE, glm::value_ptr(transMovStar));
-
+		// 画画
 		glBindVertexArray(VAO[1]);
 		glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);
 
@@ -269,7 +269,6 @@ int main()
 		glfwPollEvents();
 	}
 	fixStar.unuse();
-	movStar.unuse();
 	glfwTerminate();
 	return 0;
 }
